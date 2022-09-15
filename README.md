@@ -9,10 +9,13 @@ La consigna, propone la utilización de el framework FastAPI para el desarrollo,
 
 Una vez normalizado el dataset y entendiendo la problemática final, deberán de crear una serie de consultas que la API debe solucionar. Estas son:  
 - Año con más carreras
+    - 2021
 - Piloto con mayor cantidad de primeros puestos
+    - Hamilton with 95
 - Nombre del circuito más corrido
+    - Monza with 71
 - Piloto con mayor cantidad de puntos en total, cuyo constructor sea de nacionalidad sea American o British
-
+    - Jason Boton
   
 ## Pasos a seguir
 1. Normalización y creado de relaciones del conjunto de datos.

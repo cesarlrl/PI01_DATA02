@@ -1,4 +1,5 @@
-from peewee import *
+'''
+from peeweee import *
 from config import PASSWORD
 
 database = MySQLDatabase(
@@ -6,3 +7,9 @@ database = MySQLDatabase(
     user='root', password=PASSWORD,
     host='localhost', port=3306
 )
+'''
+
+from sqlalchemy import create_engine,MetaData
+engine=create_engine('mysql+pymysql:root@localhost:3306/py_crud')
+meta=MetaData()
+con=engine.connect()

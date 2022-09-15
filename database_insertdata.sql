@@ -90,7 +90,7 @@ CREATE TABLE `constructors`
 DROP TABLE IF EXISTS `drivers`;
 CREATE TABLE `drivers`
 (	unnamed			SMALLINT,
-	driverId		VARCHAR(40),
+	driverId		SMALLINT,
     driverRef		VARCHAR(40),
     `number`		VARCHAR(40),
     `code`			VARCHAR(80),
@@ -283,3 +283,30 @@ ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 */
+
+# Dropping unnecesary columns
+ALTER TABLE results DROP COLUMN unnamed;
+ALTER TABLE drivers DROP COLUMN unnamed;
+ALTER TABLE constructors DROP COLUMN unnamed;
+ALTER TABLE races DROP COLUMN unnamed;
+
+# Adding foreign keys
+ALTER TABLE races ADD FOREIGN KEY (circuitId) REFERENCES circuits(circuitId);
+ALTER TABLE results ADD FOREIGN KEY (constructorId) REFERENCES constructors(constructorId);
+ALTER TABLE results ADD FOREIGN KEY (raceId) REFERENCES races(raceId);
+ALTER TABLE results ADD FOREIGN KEY (driverId) REFERENCES drivers(driverId);
+
+# Answering questions
+
+# Año con más carreras
+SELECT * FROM races;
+SELECT * FROM circuits;
+
+SELECT max(round) AS Carreras, year FROM races GROUP BY `year` ORDER BY Carreras DESC LIMIT 1;
+
+# Piloto con mayor cantidad de primeros puestos
+SELECT * FROM results;
+SELECT * FROM drivers;
+
+SELECT COUNT(driverId) AS Cantidad, driverId, position FROM results 
+WHERE position = 1 ORDER BY Cantidad DESC;
