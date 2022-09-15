@@ -11,11 +11,11 @@ Una vez normalizado el dataset y entendiendo la problemática final, deberán de
 - Año con más carreras
     - 2021
 - Piloto con mayor cantidad de primeros puestos
-    - Hamilton with 95
+    - <strong>Hamilton with 95</strong>
 - Nombre del circuito más corrido
-    - Monza with 71
+    - <strong>Monza with 71</strong>
 - Piloto con mayor cantidad de puntos en total, cuyo constructor sea de nacionalidad sea American o British
-    - Jason Boton
+    - <strong>Jason Boton</strong>
   
 ## Pasos a seguir
 1. Normalización y creado de relaciones del conjunto de datos.
