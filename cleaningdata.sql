@@ -1,4 +1,4 @@
-USE lab01;
+/* USE lab01;
 
 SELECT * FROM circuits; # All good here
 
@@ -23,3 +23,4 @@ INSERT INTO qualifying SELECT *
 FROM (SELECT * FROM qualifying_split_1
 UNION
 SELECT * FROM qualifying_split_2) a;
+*/

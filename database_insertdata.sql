@@ -6,7 +6,8 @@ USE lab01;
 
 DROP TABLE IF EXISTS `circuits`;
 CREATE TABLE `circuits`
-(	circuitId	SMALLINT,
+(	unnamed		VARCHAR(40), # Column without a name, seems like Ids, should drop it later
+	circuitId	SMALLINT,
 	circuitRef 	VARCHAR(40),
     `name`		VARCHAR(40),
     location	VARCHAR(40),
@@ -14,32 +15,93 @@ CREATE TABLE `circuits`
     lat			VARCHAR(40),
     lng			VARCHAR(40),
     alt			VARCHAR(40),
-    url			VARCHAR(80)
+    url			VARCHAR(160),
+    PRIMARY KEY (circuitId)
 );
+
+DROP TABLE IF EXISTS `races`;
+CREATE TABLE `races`
+(	unnamed		SMALLINT,
+	raceId		SMALLINT,
+	`year`		SMALLINT,
+    round		SMALLINT,
+    circuitId	SMALLINT,
+    `name`		VARCHAR(40),
+    `date`		DATE,
+    `time`		VARCHAR(40),
+	url 		VARCHAR(80),
+    PRIMARY KEY (raceId),
+    FOREIGN KEY (circuitId) REFERENCES circuits(circuitId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*
+DROP TABLE IF EXISTS `qualifying`;
+CREATE TABLE `qualifying`
+(	qualifyId		SMALLINT,
+	raceId			SMALLINT,
+    driverId		SMALLINT,
+    constructorId	SMALLINT,
+    `number`		SMALLINT,
+    position		SMALLINT,
+    q1				VARCHAR(40),
+    q2				VARCHAR(40),
+    q3				VARCHAR(40)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `qualifying_split_1`;
+CREATE TABLE `qualifying_split_1`
+(	qualifyId		SMALLINT,
+	raceId			SMALLINT,
+    driverId		SMALLINT,
+    constructorId	SMALLINT,
+    `number`		SMALLINT,
+    position		SMALLINT,
+    q1				VARCHAR(40),
+    q2				VARCHAR(40),
+    q3				VARCHAR(40),
+    PRIMARY KEY (qualifyId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `qualifying_split_2`;
+CREATE TABLE `qualifying_split_2`
+(	qualifyId		SMALLINT,
+	raceId			SMALLINT,
+    driverId		SMALLINT,
+    constructorId	SMALLINT,
+    `number`		SMALLINT,
+    position		SMALLINT,
+    q1				VARCHAR(40),
+    q2				VARCHAR(40),
+    q3				VARCHAR(40)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+*/
 
 DROP TABLE IF EXISTS `constructors`;
 CREATE TABLE `constructors`
-(	Id				SMALLINT,
+(	unnamed			SMALLINT,
 	constructorId	SMALLINT,
 	contructorRef 	VARCHAR(40),
     `name` 			VARCHAR(40),
     nationality		VARCHAR(40),
-    url				VARCHAR(80)
-);
+    url				VARCHAR(80),
+    PRIMARY KEY (constructorId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `drivers`;
 CREATE TABLE `drivers`
-( 	Id				SMALLINT,
-	Idsec			SMALLINT,
+(	unnamed			SMALLINT,
 	driverId		VARCHAR(40),
     driverRef		VARCHAR(40),
     `number`		VARCHAR(40),
     `code`			VARCHAR(80),
+    `name`			VARCHAR(40),
     dob				VARCHAR(80),
     nationality		VARCHAR(40),
-    url				VARCHAR(120)
-);
+    url				VARCHAR(120),
+    PRIMARY KEY (driverId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+/*
 DROP TABLE IF EXISTS `pit_stops`;
 CREATE TABLE `pit_stops`
 (	raceId 			SMALLINT,
@@ -49,23 +111,12 @@ CREATE TABLE `pit_stops`
     `time`			VARCHAR(40),
     duration		VARCHAR(30),
     milliseconds	INT
-);
-
-DROP TABLE IF EXISTS `races`;
-CREATE TABLE `races`
-(	raceId	SMALLINT,
-	`year`	SMALLINT,
-    round	SMALLINT,
-    circuitId	SMALLINT,
-    `name`	VARCHAR(40),
-    `date`	DATE,
-    `time`	VARCHAR(40),
-    url VARCHAR(80)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+*/
 
 DROP TABLE IF EXISTS `results`;
 CREATE TABLE `results`
-(	Id				SMALLINT,
+(	unnamed			SMALLINT,
 	resultId		SMALLINT,
     raceId			SMALLINT,
     driverId		SMALLINT,
@@ -83,182 +134,152 @@ CREATE TABLE `results`
     `rank`			SMALLINT,
     fastestLapTime	VARCHAR(40),
     fastestLapSpeed	VARCHAR(40),
-    statusId		SMALLINT
-);
+    statusId		SMALLINT,
+    PRIMARY KEY (resultId)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+/*
 DROP TABLE IF EXISTS `lap_times`;
 CREATE TABLE `lap_times`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `lap_times_split_1`;
 CREATE TABLE `lap_times_split_1`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `lap_times_split_2`;
 CREATE TABLE `lap_times_split_2`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `lap_times_split_3`;
 CREATE TABLE `lap_times_split_3`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `lap_times_split_4`;
 CREATE TABLE `lap_times_split_4`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `lap_times_split_5`;
 CREATE TABLE `lap_times_split_5`
-(	unnamed1	SMALLINT,
-	unnamed2	SMALLINT,
-    unnamed3	SMALLINT,
-    unnamed4	SMALLINT,
-    unnamed5	VARCHAR(40),
-    unnamed6	INT
-);
+(	raceId		SMALLINT,
+	driverId	SMALLINT,
+    lap			SMALLINT,
+    position	SMALLINT,
+    `time`		VARCHAR(40),
+    miliseconds	INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+*/
 
-DROP TABLE IF EXISTS `qualifying`;
-CREATE TABLE `qualifying`
-(	qualifyId		SMALLINT,
-	raceId			SMALLINT,
-    driverId		SMALLINT,
-    constructorId	SMALLINT,
-    `number`		SMALLINT,
-    position		SMALLINT,
-    q1				VARCHAR(40),
-    q2				VARCHAR(40),
-    q3				VARCHAR(40)
-);
-
-DROP TABLE IF EXISTS `qualifying_split_1`;
-CREATE TABLE `qualifying_split_1`
-(	qualifyId		SMALLINT,
-	raceId			SMALLINT,
-    driverId		SMALLINT,
-    constructorId	SMALLINT,
-    `number`		SMALLINT,
-    position		SMALLINT,
-    q1				VARCHAR(40),
-    q2				VARCHAR(40),
-    q3				VARCHAR(40)
-);
-
-DROP TABLE IF EXISTS `qualifying_split_2`;
-CREATE TABLE `qualifying_split_2`
-(	qualifyId		SMALLINT,
-	raceId			SMALLINT,
-    driverId		SMALLINT,
-    constructorId	SMALLINT,
-    `number`		SMALLINT,
-    position		SMALLINT,
-    q1				VARCHAR(40),
-    q2				VARCHAR(40),
-    q3				VARCHAR(40)
-);
-
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\circuits.csv' INTO TABLE circuits
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\circuits.csv' INTO TABLE circuits
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\constructors.csv' INTO TABLE constructors
+ALTER TABLE circuits DROP COLUMN unnamed; # Dropping unnecesary column
+
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\constructors.csv' INTO TABLE constructors
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\races.csv' INTO TABLE races
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\races.csv' INTO TABLE races
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\drivers.csv' INTO TABLE drivers
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\drivers.csv' INTO TABLE drivers
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\pit_stops.csv' INTO TABLE pit_stops
+/*
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\pit_stops.csv' INTO TABLE pit_stops
+FIELDS TERMINATED BY ','
+ENCLOSED BY ''
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+*/
+
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\results.csv' INTO TABLE results
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\results.csv' INTO TABLE results
+/*
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\lap_times\\lap_times_split_1.csv' INTO TABLE lap_times_split_1
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\lap_times\\lap_times_split_1.csv' INTO TABLE lap_times_split_1
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\lap_times\\lap_times_split_2.csv' INTO TABLE lap_times_split_2
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\lap_times\\lap_times_split_2.csv' INTO TABLE lap_times_split_2
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\lap_times\\lap_times_split_3.csv' INTO TABLE lap_times_split_3
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\lap_times\\lap_times_split_3.csv' INTO TABLE lap_times_split_3
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\lap_times\\lap_times_split_4.csv' INTO TABLE lap_times_split_4
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\lap_times\\lap_times_split_4.csv' INTO TABLE lap_times_split_4
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\lap_times\\lap_times_split_5.csv' INTO TABLE lap_times_split_5
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\lap_times\\lap_times_split_5.csv' INTO TABLE lap_times_split_5
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\Qualifying\\qualifying_split_1.csv' INTO TABLE qualifying_split_1
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\Qualifying\\qualifying_split_1.csv' INTO TABLE qualifying_split_1
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\Datasets\\Qualifying\\qualifying_split_2.csv' INTO TABLE qualifying_split_2
 FIELDS TERMINATED BY ','
 ENCLOSED BY ''
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
-
-LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 8.0\\Uploads\\\\DatasetsCopy\\Qualifying\\qualifying_split_2.csv' INTO TABLE qualifying_split_2
-FIELDS TERMINATED BY ','
-ENCLOSED BY ''
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+*/
